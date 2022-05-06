@@ -6,12 +6,21 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     
-    private Rigidbody rigidBodyComponent;
+    Rigidbody rigidBodyComponent;
     bool jump;
     bool touchGround;
-    private float horizontal;
-    private int coins;
+    float horizontal;
+    int coins;
     float timer = 0.0f;
+
+    [SerializeField]
+    Transform player;
+
+    [SerializeField]
+    Transform spawnpoint;
+
+    [SerializeField]
+    Transform deathpoint;
 
     [SerializeField]
     int jmpPwr = 6;
@@ -41,6 +50,11 @@ public class Player : MonoBehaviour
 
         var f = GameObject.Find("Time").GetComponent<Text>();
         f.text = $"Time: {(int)(timer % 60)}";
+
+        if(player.position.y < deathpoint.position.y)
+        {
+            player.position = spawnpoint.position;
+        }
     }
 
     private void FixedUpdate()
